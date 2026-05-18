@@ -1,21 +1,18 @@
-import asyncio
+}
 import os
-
-from aiogram import Bot, Dispatcher
-from aiogram.filters import CommandStart
-from aiogram.types import Message
+from aiogram import Bot, Dispatcher, executor, types
 
 TOKEN = os.getenv("BOT_TOKEN")
 
 bot = Bot(token=TOKEN)
-dp = Dispatcher()
+dp = Dispatcher(bot)
 
-@dp.message(CommandStart())
-async def start(message: Message):
+@dp.message_handler(commands=['start'])
+async def start(message: types.Message):
     await message.answer("✅ بوت Quotex AI يعمل بنجاح")
 
-@dp.message()
-async def signal(message: Message):
+@dp.message_handler()
+async def signal(message: types.Message):
 
     result = """
 📊 الزوج: EUR/USD OTC
@@ -35,9 +32,5 @@ async def signal(message: Message):
 
     await message.answer(result)
 
-async def main():
-    print("BOT STARTED")
-    await dp.start_polling(bot)
-
 if name == "main":
-    asyncio.run(main())
+    executor.start_polling(dp, skip_updates=True
