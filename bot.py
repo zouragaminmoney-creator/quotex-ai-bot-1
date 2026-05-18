@@ -1,36 +1,15 @@
-}
-import os
-from aiogram import Bot, Dispatcher, executor, types
+from telegram.ext import Updater, CommandHandler
 
-TOKEN = os.getenv("BOT_TOKEN")
+TOKEN = 8928367627:AAHpiqsRIHKMAKDn4I4E0OGNNIIqXMX2f3M
 
-bot = Bot(token=TOKEN)
-dp = Dispatcher(bot)
+def start(update, context):
+    update.message.reply_text("بوت Quotex AI شغال ✅")
 
-@dp.message_handler(commands=['start'])
-async def start(message: types.Message):
-    await message.answer("✅ بوت Quotex AI يعمل بنجاح")
+updater = Updater(TOKEN, use_context=True)
 
-@dp.message_handler()
-async def signal(message: types.Message):
+dp = updater.dispatcher
+dp.add_handler(CommandHandler("start", start))
 
-    result = """
-📊 الزوج: EUR/USD OTC
-🕒 الفريم: 1M
-📈 الاتجاه: BUY 🔼
-⏰ وقت الدخول: بعد إغلاق الشمعة الحالية
-⌛ مدة الصفقة: 1 دقيقة
-🎯 قوة الصفقة: قوية
-
-📌 سبب الدخول:
-• دعم قوي
-• BOS صاعد
-• زخم شرائي
-
-📍 نسبة الثقة: 88%
-"""
-
-    await message.answer(result)
-
-if name == "main":
-    executor.start_polling(dp, skip_updates=True
+print("Bot Started...")
+updater.start_polling()
+updater.idle()
